@@ -65,6 +65,46 @@
 
   <script>
     "use strict";
-   
+    const inputName =document.querySelector('.add-form-name');
+    const inputComment=document.querySelector('.add-form-text');
+    const button = document.querySelector('.add-form-button');
+    console.log (button);
+    const commentsList = document.querySelector('.comments');
+
+    inputName.addEventListener('input', (event) => {
+    console.log(inputName.value);
+  });
+
+  inputComment.addEventListener('input', (event) => {
+    console.log(inputComment.value);
+  });
+
+ 
+
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
+    const currentDateTime = new Date().toLocaleString(); 
+
+    const newComment = `
+        <li class="comment">
+          <div class="comment-header">
+            <div>${inputName.value}</div>
+            <div>${currentDateTime}</div>
+          </div>
+          <div class="comment-body">
+            <div class="comment-text">
+              ${inputComment.value}
+            </div>
+          </div>
+          <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter">0</span>
+              <button class="like-button"></button>
+            </div>
+          </div>
+        </li>`;
+
+    commentsList.innerHTML += newComment;
+  });   
   </script>
 </html>
