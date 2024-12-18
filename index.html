@@ -63,40 +63,40 @@
     </div>
   </body>
 
+  <script>
+    "use strict";
 
-           <script>
-  "use strict";
+    const comments = [
+      {
+        name: "Глеб Фокин",
+        date: "12.02.22 12:18",
+        text: "Это будет первый комментарий на этой странице",
+        likes: 3,
+        isLiked: false,
+      },
+      {
+        name: "Варвара Н.",
+        date: "13.02.22 19:22",
+        text: "Мне нравится как оформлена эта страница! ❤",
+        likes: 75,
+        isLiked: true,
+      },
+    ];
 
-  const comments = [
-    {
-      name: 'Глеб Фокин',
-      date: '12.02.22 12:18',
-      text: 'Это будет первый комментарий на этой странице',
-      likes: 3,
-      isLiked: false,
-    },
-    {
-      name: 'Варвара Н.',
-      date: '13.02.22 19:22',
-      text: 'Мне нравится как оформлена эта страница! ❤',
-      likes: 75,
-      isLiked: true,
-    },
-  ];
+    const commentsList = document.querySelector(".comments");
+    const inputName = document.querySelector(".add-form-name");
+    const inputComment = document.querySelector(".add-form-text");
+    const button = document.querySelector(".add-form-button");
+    const likeButtons = document.querySelectorAll(".like-button");
 
-  const commentsList = document.querySelector('.comments');
-  const inputName = document.querySelector('.add-form-name');
-  const inputComment = document.querySelector('.add-form-text');
-  const button = document.querySelector('.add-form-button');
+    const renderFuction = () => {
+      commentsList.innerHTML = "";
 
-  // Функция рендера комментариев
-  const renderFuction = () => {
-    // Очищаем список комментариев перед рендером
-    commentsList.innerHTML = '';
-
-    comments.forEach((comment, index) => {
-      const className = comment.isLiked ? "like-button -active-like" : "like-button";
-      const commentHTML = `
+      comments.forEach((comment, index) => {
+        const className = comment.isLiked
+          ? "like-button -active-like"
+          : "like-button";
+        const commentHTML = `
         <li class="comment">
           <div class="comment-header">
             <div>${comment.name}</div>
@@ -114,46 +114,40 @@
             </div>
           </div>
         </li>`;
-      commentsList.innerHTML += commentHTML;
-    });
-
-    // Добавляем обработчики кликов на кнопки лайков
-    const likeButtons = document.querySelectorAll('.like-button');
-    likeButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const index = button.dataset.index;
-        comments[index].isLiked = !comments[index].isLiked;
-        comments[index].likes += comments[index].isLiked ? 1 : -1;
-        renderFuction(); // Перерендер комментариев
+        commentsList.innerHTML += commentHTML;
       });
+
+      likeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const index = button.dataset.index;
+          comments[index].isLiked = !comments[index].isLiked;
+          comments[index].likes += comments[index].isLiked ? 1 : -1;
+          renderFuction();
+        });
+      });
+    };
+
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (inputName.value.trim() === "" || inputComment.value.trim() === "") {
+        alert("Пожалуйста, заполните все поля.");
+        return;
+      }
+
+      const currentDateTime = new Date().toLocaleString();
+      comments.push({
+        name: inputName.value,
+        date: currentDateTime,
+        text: inputComment.value,
+        likes: 0,
+        isLiked: false,
+      });
+
+      inputName.value = "";
+      inputComment.value = "";
+      renderFuction();
     });
-  };
 
-  // Добавление нового комментария
-  button.addEventListener('click', (event) => {
-    event.preventDefault();
-    if (inputName.value.trim() === '' || inputComment.value.trim() === '') {
-      alert('Пожалуйста, заполните все поля.');
-      return;
-    }
-
-    const currentDateTime = new Date().toLocaleString();
-    comments.push({
-      name: inputName.value,
-      date: currentDateTime,
-      text: inputComment.value,
-      likes: 0,
-      isLiked: false,
-    });
-
-    inputName.value = '';
-    inputComment.value = '';
-    renderFuction(); // Перерендер с новым комментарием
-  });
-
-  // Первоначальный рендер
-  renderFuction();
-</script>
-
-
+    renderFuction();
+  </script>
 </html>
