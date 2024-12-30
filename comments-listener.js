@@ -19,8 +19,13 @@ export function initComments(comments, escapeHTML) {
 
       const commentElement = target.closest(".comment");
       const likesCounter = commentElement.querySelector(".likes-counter");
-      likesCounter.textContent = comment.likes;
-      target.classList.toggle("-active-like", comment.isLiked);
+      const likeButton = commentElement.querySelector(".like-button");
+
+      likeButton.className = comment.isLiked
+      ? "like-button -active-like"
+      : "like-button";
+
+    likesCounter.textContent = comment.likes;
       return;
     }
 
