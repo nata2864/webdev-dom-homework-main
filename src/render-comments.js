@@ -27,7 +27,6 @@ export const renderComments = () => {
             </div>
           </div>
         </li>`;
-    commentsList.innerHTML += commentHTML
-    
+    commentsList.innerHTML += commentHTML;
   });
 };
