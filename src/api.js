@@ -18,3 +18,26 @@ export function fetchCommentsAndRender(renderCallback, initCallback) {
         console.error("Ошибка при загрузке комментариев:", error.message);
       });
   }
+
+ 
+  
+  export function postComment(newComment) {
+    return fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify(newComment),
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Ошибка при добавлении комментария");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Ответ от сервера:", data);
+      return data.comment || null; // Возвращаем комментарий, который создал сервер
+    })
+    .catch((error) => {
+      console.error("Ошибка добавления комментария:", error.message);
+      return null;
+    });
+  }
