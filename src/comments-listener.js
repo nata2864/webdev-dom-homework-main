@@ -1,5 +1,9 @@
 export function initComments(comments, escapeHTML) {
+
+  console.log("Комментарии:", comments);
   const commentsList = document.querySelector(".comments");
+  console.log(commentsList);
+
   if (!commentsList) {
     throw new Error("Element '.comments' not found");
   }
@@ -11,8 +15,14 @@ export function initComments(comments, escapeHTML) {
     const target = event.target;
 
     if (target.classList.contains("like-button")) {
-      const index = target.dataset.index;
-      const comment = comments[index];
+      const id = target.dataset.id; 
+
+
+    const comment = comments.find((comment) => comment.id === parseInt(id)); 
+    if (!comment) {
+      console.error("Comment not found");
+      return;
+    }
 
       comment.isLiked = !comment.isLiked;
       comment.likes += comment.isLiked ? 1 : -1;
