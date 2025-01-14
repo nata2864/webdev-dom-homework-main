@@ -1,13 +1,8 @@
-import { renderComments } from "./render-comments.js";
+import { fetchCommentsAndRender } from "./api.js";
+// import { renderComments } from "./render-comments.js";
 import { postComment } from "./api.js";
 
-
-
-
-
-export function addComments(comments) {
-
-
+export function addComments() {
   const inputName = document.querySelector(".add-form-name");
   const inputComment = document.querySelector(".add-form-text");
   const button = document.querySelector(".add-form-button");
@@ -35,21 +30,19 @@ export function addComments(comments) {
     button.disabled = true;
 
     postComment(newComment)
-    .then((createdComment) => {
-      if (createdComment) {
-        // Добавляем комментарий, возвращенный сервером, в список
-        comments.push(createdComment);
-        renderComments(comments);
-      }
-    })
-    .catch(() => {
-      alert("Не удалось отправить комментарий, попробуйте ещё раз.");
-    })
-    .finally(() => {
-      // Разблокируем кнопку и очищаем форму
-      button.disabled = false;
-      inputName.value = "";
-      inputComment.value = "";
-    });
-});
+      .then(() => {
+        // console.log("Комментарий успешно отправлен");
+        fetchCommentsAndRender();
+      })
+      .catch((error) => {
+        // console.error("Ошибка отправки комментария:", error.message);
+        alert("Не удалось отправить комментарий, попробуйте ещё раз.");
+      })
+      .finally(() => {
+        console.log("Форма очищена, кнопка разблокирована.");
+        button.disabled = false;
+        inputName.value = "";
+        inputComment.value = "";
+      });
+  });
 }

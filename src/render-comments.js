@@ -1,11 +1,12 @@
 
+import { initComments } from "./comments-listener.js";
 import { escapeHTML } from "./utils.js";
 
 const commentsList = document.querySelector(".comments");
-
+commentsList.innerHTML = ""; 
 
 export const renderComments = (comments) => {
-  commentsList.innerHTML = ""; 
+  
   comments.forEach((comment) => {
     const authorName = comment.author?.name || "Аноним"; 
     const commentDate = comment.date
@@ -36,6 +37,7 @@ export const renderComments = (comments) => {
         </li>`;
     commentsList.innerHTML += commentHTML;
   });
+  initComments(comments, escapeHTML)
 };
 
 
