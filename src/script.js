@@ -1,11 +1,6 @@
-import { comments } from "./mocks.js";
-import { escapeHTML } from "./utils.js";
-import { renderComments } from "./render-comments.js";
-import { initComments } from "./comments-listener.js";
 import { addComments } from "./add-comments.js";
+import { fetchCommentsAndRender } from "./api.js";
 
-initComments(comments, escapeHTML);
+fetchCommentsAndRender();
 
-addComments(comments);
-
-renderComments();
+addComments();
